@@ -12,6 +12,7 @@ public class Client{
             conn = DriverManager.getConnection("jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory");
             System.out.println("Connected to database! ");
 
+            //ALL INTERACTIONS WITH DATABASE NEED TO BE IN A TRY/CATCH
 
 
 
@@ -19,7 +20,6 @@ public class Client{
 
 
 
-            
 
 
         }
@@ -34,3 +34,6 @@ public class Client{
 
     }
 }
+
+// WRITE CRUD METHODS HERE
+
