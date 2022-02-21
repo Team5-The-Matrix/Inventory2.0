@@ -1,0 +1,10 @@
+To run the client program properly, you need to install the JDBC from mysql website. 
+
+(Connector/J)
+
+
+1. install the latest version as a .zip
+2. unzip, and add the folder to the referenced libraries folder under java projects/Inventory2/referenced libraries
+3. the connect statement will try to use the database URL to connect.
+4. after connecting, SQL queries can be sent. Refer to MYSQL documentation for how to send queries and receive data.
+
