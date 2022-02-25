@@ -9,8 +9,6 @@ public class InventoryManagerGUI {
         JLabel l1, l2, l3, l4, l5;
         JTextField tfs, tf1, tf2, tf3, tf4, tf5;
         JButton bs, b1, b2, b3;
-        JTable jt;
-        JScrollPane sp;
         DefaultListModel<String> li1, li2, li3, li4, li5;
         JList<String> list1, list2, list3, list4, list5;
 
@@ -94,9 +92,14 @@ public class InventoryManagerGUI {
         b2.setBounds(160, 400, 95, 30);
         b3.setBounds(270, 400, 95, 30);
 
-        b1.addActionListener(new ActionListener() {
+        bs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tf1.setText("Welcome to Javatpoint.");
+                String productId = tfs.getText();
+                tf1.setText(productId);
+                tf2.setText("quanity");
+                tf3.setText("wholesale_cost");
+                tf4.setText("retail_price");
+                tf5.setText("vendor_id");
             }
         });
 
@@ -127,5 +130,6 @@ public class InventoryManagerGUI {
         f.setSize(1200, 600);
         f.setLayout(null);
         f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
