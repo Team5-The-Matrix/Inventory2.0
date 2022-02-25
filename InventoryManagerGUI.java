@@ -103,6 +103,39 @@ public class InventoryManagerGUI {
             }
         });
 
+        b1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String productId = tfs.getText();
+                tf1.setText(productId);
+                tf2.setText("quanity");
+                tf3.setText("wholesale_cost");
+                tf4.setText("retail_price");
+                tf5.setText("vendor_id");
+            }
+        });
+
+        b2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String productId = tfs.getText();
+                tf1.setText(productId);
+                tf2.setText("quanity");
+                tf3.setText("wholesale_cost");
+                tf4.setText("retail_price");
+                tf5.setText("vendor_id");
+            }
+        });
+
+        b3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String productId = tfs.getText();
+                tf1.setText(productId);
+                tf2.setText("quanity");
+                tf3.setText("wholesale_cost");
+                tf4.setText("retail_price");
+                tf5.setText("vendor_id");
+            }
+        });
+
         f.add(bs);
         f.add(b1);
         f.add(b2);
