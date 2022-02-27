@@ -40,9 +40,8 @@ static Connection conn = null;
     //updates entry in database
     public void Update(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){ //is this data passed in correct?
         try{
-            //update variable names in string to correspond with database
             PreparedStatement updateStmt = conn.prepareStatement
-            ("UPDATE Inventory SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
+            ("UPDATE inventory SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
             updateStmt.setString(5, productID);
             updateStmt.setString(1, quantity);
             updateStmt.setString(2, wholesaleCost);
@@ -59,9 +58,8 @@ static Connection conn = null;
     //create new entry in database
     public void Create(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){
         try{
-            //update variable names in string to correspond with database
             PreparedStatement createStmt = conn.prepareStatement
-            ("INSERT INTO Inventory VALUES(?,?,?,?,?)");
+            ("INSERT INTO inventory VALUES(?,?,?,?,?)");
             createStmt.setString(1, productID);
             createStmt.setString(2, quantity);
             createStmt.setString(3,wholesaleCost);
@@ -72,6 +70,37 @@ static Connection conn = null;
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    //deletes entry from database
+    public void Delete(String productID){
+        try{
+            PreparedStatement deleteStmt = conn.prepareStatement
+            ("DELETE FROM inventory WHERE product_id = ?");
+            deleteStmt.setString(1, productID);
+            deleteStmt.executeUpdate();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    //searches for and reads a line in database
+    public String Search(String productID){
+        try{
+            PreparedStatement selectStmt = conn.prepareStatement
+            ("SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id FROM inventory WHERE product_id = ?");
+            selectStmt.setString(1, productID);
+            ResultSet selectRS = selectStmt.executeQuery();
+            return selectRS.getString("product_id") + "," + selectRS.getString("quantity") + "," 
+            + selectRS.getString("wholesale_cost") + "," + selectRS.getString("sale_price") + "," + selectRS.getString("supplier_id") + ",";
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return "search failed";
     }
 
 }
