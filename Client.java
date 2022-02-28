@@ -1,36 +1,55 @@
 import java.sql.*;
-
+import java.sql.DriverManager;
+import java.util.Properties;
 public class Client{
+
+static Connection conn = null;
+
+
+
+//Constructs login string
+
+public static String login(String user, String pass){
+String loginString = null;
+loginString = "user="+user+"&password="+pass;
+return loginString;
+}
+
+
+public static boolean connect(String user,String password){
+    boolean connected = false;
+    LoadDriver driver = new LoadDriver();
+    String name,pass,url;
+
+    try{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        url = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory";
+        name = user;
+        pass = password;
+        //String fullLoginString = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory"+ loginString;
+        //System.out.println(fullLoginString);
+        conn = DriverManager.getConnection(url,name,pass);
+        System.out.println("Connected to database! ");
+        connected = true;
+        return connected;
+    }
+    catch(SQLException e){
+        e.printStackTrace();
+        connected = false;
+        return connected;
+    }
+    catch(Exception f)
+    {
+        f.printStackTrace();
+        connected = false;
+        return connected;
+    }
+}
 
 
 //TEST
-static Connection conn = null;
+
     public static void main(String[] args){
-
-        
-        try{
-
-            conn = DriverManager.getConnection("jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory"+ 
-            "user=InventoryAdmin&password=");
-            System.out.println("Connected to database! ");
-
-            //ALL INTERACTIONS WITH DATABASE NEED TO BE IN A TRY/CATCH
-
-
-
-
-
-
-
-
-
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-
-        }
-
-        
 
 
 
