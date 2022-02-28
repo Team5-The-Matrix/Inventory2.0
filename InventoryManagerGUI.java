@@ -1,17 +1,40 @@
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class InventoryManagerGUI {
     public static void main(String[] args) {
 
         JFrame f = new JFrame("Inventory Manager");
-
-        JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10;
-        JTable table = new JTable();
+        DefaultTableModel model = Client.readDatabase();
+        JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10; // labels on top for table
         JTextField tfs, tf1, tf2, tf3, tf4, tf5;
         JButton bs, b1, b2, b3;
 
 
+
+        //CALL IN TABLE MODEL FROM CLIENT
+        
+        JTable table = new JTable(model);
+        JTableHeader header = table.getTableHeader();
+        header.setBackground(Color.green);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setPreferredScrollableViewportSize(new Dimension(750,500));
+        table.setFillsViewportHeight(true);
+        JScrollPane pane = new JScrollPane(table);
+        pane.setViewportView(table);
+        pane.setBounds(400, 50, 750, 500);
+
+
+        
+
+
+        //table.setBounds(400, 50, 750, 500);
         //DefaultListModel<String> li1, li2, li3, li4, li5;
         //JList<String> list1, list2, list3, list4, list5;
 
@@ -106,45 +129,55 @@ public class InventoryManagerGUI {
         //SEARCH METHOD
         bs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String productId = tfs.getText();
-                tf1.setText(productId);
-                tf2.setText("quantity");
-                tf3.setText("wholesale_cost");
-                tf4.setText("retail_price");
-                tf5.setText("vendor_id");
+                String productID = tfs.getText();
+                Client.Search(productID);
+                tf1.setText(productID);
+                /* tf2.setText(quanity);
+                tf3.setText(wholesaleCost);
+                tf4.setText(retailPrice);
+                tf5.setText(sellerID); */
             }
         });
         //CREATE METHOD
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String productId = tfs.getText();
-                tf1.setText(productId);
-                tf2.setText("quantity");
-                tf3.setText("wholesale_cost");
-                tf4.setText("retail_price");
-                tf5.setText("vendor_id");
+                String productID = tf1.getText();
+                String quanity = tf2.getText();
+                String wholesaleCost = tf3.getText();
+                String retailPrice = tf4.getText();
+                String sellerID = tf5.getText();
+                Client.Create(productID,quanity,wholesaleCost,retailPrice,sellerID);
+
             }
         });
         // UPDATE METHOD
         b2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String productId = tfs.getText();
-                tf1.setText(productId);
-                tf2.setText("quantity");
-                tf3.setText("wholesale_cost");
-                tf4.setText("retail_price");
-                tf5.setText("vendor_id");
+                String productID = tf1.getText();
+                String quanity = tf2.getText();
+                String wholesaleCost = tf3.getText();
+                String retailPrice = tf4.getText();
+                String sellerID = tf5.getText();
+                Client.Update(productID,quanity,wholesaleCost,retailPrice,sellerID);
             }
         });
         // DELETE METHOD
         b3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String productId = tfs.getText();
-                tf1.setText(productId);
-                tf2.setText("quantity");
-                tf3.setText("wholesale_cost");
-                tf4.setText("retail_price");
-                tf5.setText("vendor_id");
+                String productID = tfs.getText();
+                Client.Delete(productID);
+            }
+        });
+
+        // POPULATE TEXT FIELDS WITH SELECTED ROW
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event)
+            {
+                tf1.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
+                tf2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+                tf3.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+                tf4.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
+                tf5.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
             }
         });
 
@@ -171,6 +204,9 @@ public class InventoryManagerGUI {
        // f.add(list3);
       //  f.add(list4);
       //  f.add(list5);
+        //pane.setViewportView(table);
+        //f.add(pane);
+        f.add(pane);
 
         f.setSize(1200, 600);
         f.setLayout(null);

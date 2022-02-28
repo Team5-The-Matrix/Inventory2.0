@@ -83,7 +83,7 @@ enter.addActionListener(new ActionListener(){
                 login.dispose();
 
                 // CALL INVENTORY MANAGER
-                
+                InventoryManagerGUI.main(args);
 
             }
         else
@@ -106,11 +106,5 @@ clear.addActionListener(new ActionListener()
         pass.setText("");
     }
 });
-
-
-
 }
-
-
-
 }
