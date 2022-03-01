@@ -1,24 +1,21 @@
 import java.sql.*;
 import java.sql.DriverManager;
-import java.util.Hashtable;
-import java.util.Properties;
-
 import javax.swing.table.DefaultTableModel;
+
+
 public class Client{
 
 static Connection conn = null;
 
 
-
 //Constructs login string
-
 public static String login(String user, String pass){
 String loginString = null;
 loginString = "user="+user+"&password="+pass;
 return loginString;
 }
 
-
+//Connect to database
 public static boolean connect(String user,String password){
     boolean connected = false;
     LoadDriver driver = new LoadDriver();
@@ -36,11 +33,13 @@ public static boolean connect(String user,String password){
         connected = true;
         return connected;
     }
+
     catch(SQLException e){
         e.printStackTrace();
         connected = false;
         return connected;
     }
+
     catch(Exception f)
     {
         f.printStackTrace();
@@ -51,11 +50,7 @@ public static boolean connect(String user,String password){
 
 
 //TEST
-
     public static void main(String[] args){
-
-
-
     }
 
     
@@ -102,14 +97,17 @@ public static boolean connect(String user,String password){
             ("DELETE FROM product WHERE product_id = ?");
             deleteStmt.setString(1, productID);
             deleteStmt.executeUpdate();
+
+            System.out.println("Client Delete Successful ");
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
 
+    //READS DATABASE INTO TABLEMODEL FOR GUI
     public static DefaultTableModel readDatabase(){
-        
+    
         DefaultTableModel table = new DefaultTableModel();
         table.addColumn("Product ID");
         table.addColumn("Quantity");
@@ -117,24 +115,27 @@ public static boolean connect(String user,String password){
         table.addColumn("Sale Price");
         table.addColumn("Supplier ID");
         try{
-        
         String sql = "SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id "+
                      "FROM product "+
-                     "LIMIT 100";
+                     "LIMIT 50000";
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
+        int rowcount=0;
         while (rs.next())
-        {
-            table.addRow(new Object[]{
-                rs.getString("product_id"),
-                rs.getString("quantity"),
-                rs.getString("wholesale_cost"),
-                rs.getString("sale_price"),
-                rs.getString("supplier_id")
-            });     
-           // System.out.print(rs.getString("product_id")+rs.getString("quantity")); test, table is stored.
-        }
-        System.out.println("Database stored in table");
+            {
+                table.addRow(new Object[]{
+                    rs.getString("product_id"),
+                    rs.getString("quantity"),
+                    rs.getString("wholesale_cost"),
+                    rs.getString("sale_price"),
+                    rs.getString("supplier_id")
+                });  
+                rowcount++;   
+            }
+    
+        System.out.println("Lines stored: "+rowcount);
+
+        System.out.println("Database stored in table! ");
         return table;
         }
         catch(Exception e)
@@ -146,20 +147,25 @@ public static boolean connect(String user,String password){
 
 
     //searches for and reads a line in database
-    public static String Search(String productID){
+    public static String[] Search(String productID){
+        String[] entry = new String[5];
         try{
             PreparedStatement selectStmt = conn.prepareStatement
-            ("SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id FROM product WHERE product_id = ?");
-            selectStmt.setString(1, productID);
+            ("SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id FROM product WHERE "+productID+" in (product_id)");
+            //selectStmt.setString(1, productID);
             ResultSet selectRS = selectStmt.executeQuery();
-            return selectRS.getString("product_id") + "," + selectRS.getString("quantity") + "," 
-            + selectRS.getString("wholesale_cost") + "," + selectRS.getString("sale_price") + "," + selectRS.getString("supplier_id") + ",";
+            entry[0] =selectRS.getString("product_id");
+            entry[1] =selectRS.getString("quantity");
+            entry[2] =selectRS.getString("wholesale_cost");
+            entry[3] =selectRS.getString("sale_price");
+            entry[4] =selectRS.getString("supplier_id");       
         }
         catch(Exception e){
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Search Failed, Item not in Database ");
-            return "search failed, item not in database";
+            
         }
+        return entry;
         
     }
 

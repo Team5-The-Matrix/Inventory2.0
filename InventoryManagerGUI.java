@@ -16,8 +16,6 @@ public class InventoryManagerGUI {
         JTextField tfs, tf1, tf2, tf3, tf4, tf5;
         JButton bs, b1, b2, b3;
 
-
-
         //CALL IN TABLE MODEL FROM CLIENT
         
         JTable table = new JTable(model);
@@ -30,65 +28,6 @@ public class InventoryManagerGUI {
         pane.setViewportView(table);
         pane.setBounds(400, 50, 750, 500);
 
-
-        
-
-
-        //table.setBounds(400, 50, 750, 500);
-        //DefaultListModel<String> li1, li2, li3, li4, li5;
-        //JList<String> list1, list2, list3, list4, list5;
-
-        /* li1 = new DefaultListModel<>();
-        li2 = new DefaultListModel<>();
-        li3 = new DefaultListModel<>();
-        li4 = new DefaultListModel<>();
-        li5 = new DefaultListModel<>();
- */
-
-        //THESE SHOULD BE LABELS
-        /* li1.addElement("Product Id");
-        li2.addElement("Quantity");
-        li3.addElement("Wholesale Cost");
-        li4.addElement("Retail Price");
-        li5.addElement("Vendor Id"); */
-
-        /* li1.addElement("Item1");
-        li1.addElement("Item2");
-        li1.addElement("Item3");
-
-        li2.addElement("Item1");
-        li2.addElement("Item2");
-        li2.addElement("Item3");
-
-        li3.addElement("Item1");
-        li3.addElement("Item2");
-        li3.addElement("Item3");
-
-        li4.addElement("Item1");
-        li4.addElement("Item2");
-        li4.addElement("Item3");
-
-        li5.addElement("Item1");
-        li5.addElement("Item2");
-        li5.addElement("Item3"); */
-
-
-
-
-
-
-      /*   list1 = new JList<>(li1);
-        list2 = new JList<>(li2);
-        list3 = new JList<>(li3);
-        list4 = new JList<>(li4);
-        list5 = new JList<>(li5);
-
-        list1.setBounds(400, 50, 145, 500);
-        list2.setBounds(550, 50, 145, 500);
-        list3.setBounds(700, 50, 145, 500);
-        list4.setBounds(850, 50, 145, 500);
-        list5.setBounds(1000, 50, 145, 500);
- */
         l1 = new JLabel("Product Id");
         l2 = new JLabel("Quantity");
         l3 = new JLabel("Wholesale Cost");
@@ -127,40 +66,99 @@ public class InventoryManagerGUI {
 
 
         //SEARCH METHOD
+        try{
         bs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String productID = tfs.getText();
-                Client.Search(productID);
-                tf1.setText(productID);
-                /* tf2.setText(quanity);
-                tf3.setText(wholesaleCost);
-                tf4.setText(retailPrice);
-                tf5.setText(sellerID); */
-            }
-        });
-        //CREATE METHOD
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String productID = tf1.getText();
-                String quanity = tf2.getText();
-                String wholesaleCost = tf3.getText();
-                String retailPrice = tf4.getText();
-                String sellerID = tf5.getText();
-                Client.Create(productID,quanity,wholesaleCost,retailPrice,sellerID);
+                String[] result = Client.Search(productID);
+                tf1.setText(result[0]);
+                tf2.setText(result[1]);
+                tf3.setText(result[2]);
+                tf4.setText(result[3]);
+                tf5.setText(result[4]);
 
+                //print statement in client.
             }
         });
-        // UPDATE METHOD
-        b2.addActionListener(new ActionListener() {
+        }
+        catch(Exception e)
+        {
+            System.out.println("Search Error! ");
+            e.printStackTrace();
+        }
+
+
+
+
+
+        //CREATE METHOD
+        try{
+        b1.addActionListener(new ActionListener() {
+
+            
             public void actionPerformed(ActionEvent e) {
                 String productID = tf1.getText();
-                String quanity = tf2.getText();
+                String quantity = tf2.getText();
                 String wholesaleCost = tf3.getText();
                 String retailPrice = tf4.getText();
                 String sellerID = tf5.getText();
-                Client.Update(productID,quanity,wholesaleCost,retailPrice,sellerID);
+                Client.Create(productID,quantity,wholesaleCost,retailPrice,sellerID);
+                
+                model.addRow(new Object[]{
+                    productID,
+                    quantity,
+                    wholesaleCost,
+                    retailPrice,
+                    sellerID
+                }); 
+
+                tf1.setText("");
+                tf2.setText("");
+                tf3.setText("");
+                tf4.setText("");
+                tf5.setText("");
+                
+                System.out.println("Operation Success: New Item Added!");
             }
         });
+        }
+        catch(Exception e)
+        {e.printStackTrace();}
+
+        // UPDATE METHOD
+        try{
+        b2.addActionListener(new ActionListener() {
+                String old1=tf1.getText();
+                String old2=tf2.getText();
+                String old3=tf3.getText();
+                String old4=tf4.getText();
+                String old5=tf5.getText();
+            public void actionPerformed(ActionEvent e) {
+                if  (tf1.getText().equals("")|| tf2.getText().equals("")||tf3.getText().equals("")
+                    ||tf4.getText().equals("")||tf5.getText().equals("")){
+                        System.out.println("Error: One or more fields is empty, cannot update");
+                    }
+                else{    
+                int row = table.getSelectedRow();
+                String new1=tf1.getText();
+                String new2=tf2.getText();
+                String new3=tf3.getText();
+                String new4=tf4.getText();
+                String new5=tf5.getText();
+
+
+                
+                }
+            }
+        });
+    }
+    catch(Exception e){
+        System.out.println("Update Error! ");
+        e.printStackTrace();
+    }
+
+
+        try{
         // DELETE METHOD
         b3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -168,8 +166,18 @@ public class InventoryManagerGUI {
                 Client.Delete(productID);
             }
         });
+        }
+        catch(Exception e){
+            System.out.println("Delete Error! ");
+            e.printStackTrace();
+        }
+
+
+
 
         // POPULATE TEXT FIELDS WITH SELECTED ROW
+
+        try{
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event)
             {
@@ -180,6 +188,11 @@ public class InventoryManagerGUI {
                 tf5.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
             }
         });
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
         f.add(bs);
         f.add(b1);
