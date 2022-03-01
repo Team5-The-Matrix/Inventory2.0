@@ -14,7 +14,7 @@ public class InventoryManagerGUI {
         DefaultTableModel model = Client.readDatabase();
         JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10; // labels on top for table
         JTextField tfs, tf1, tf2, tf3, tf4, tf5;
-        JButton bs, b1, b2, b3;
+        JButton bs, b1, b2, b3, b4;
 
         //CALL IN TABLE MODEL FROM CLIENT
         
@@ -58,11 +58,14 @@ public class InventoryManagerGUI {
         b1 = new JButton("Add New");
         b2 = new JButton("Update");
         b3 = new JButton("Delete");
+        b4 = new JButton("Clear");
+        
 
         bs.setBounds(50, 50, 95, 30);
         b1.setBounds(50, 400, 95, 30);
         b2.setBounds(160, 400, 95, 30);
         b3.setBounds(270, 400, 95, 30);
+        b4.setBounds(50, 350, 95, 30);
 
 
         //SEARCH METHOD
@@ -76,7 +79,6 @@ public class InventoryManagerGUI {
                 tf3.setText(result[2]);
                 tf4.setText(result[3]);
                 tf5.setText(result[4]);
-
                 //print statement in client.
             }
         });
@@ -86,10 +88,6 @@ public class InventoryManagerGUI {
             System.out.println("Search Error! ");
             e.printStackTrace();
         }
-
-
-
-
 
         //CREATE METHOD
         try{
@@ -128,11 +126,6 @@ public class InventoryManagerGUI {
         // UPDATE METHOD
         try{
         b2.addActionListener(new ActionListener() {
-                String old1=tf1.getText();
-                String old2=tf2.getText();
-                String old3=tf3.getText();
-                String old4=tf4.getText();
-                String old5=tf5.getText();
             public void actionPerformed(ActionEvent e) {
                 if  (tf1.getText().equals("")|| tf2.getText().equals("")||tf3.getText().equals("")
                     ||tf4.getText().equals("")||tf5.getText().equals("")){
@@ -140,14 +133,17 @@ public class InventoryManagerGUI {
                     }
                 else{    
                 int row = table.getSelectedRow();
-                String new1=tf1.getText();
-                String new2=tf2.getText();
-                String new3=tf3.getText();
-                String new4=tf4.getText();
-                String new5=tf5.getText();
-
+                
+                table.setValueAt(tf1.getText() ,row,0 );
+                table.setValueAt(tf2.getText() ,row,1 );
+                table.setValueAt(tf3.getText() ,row,2 );
+                table.setValueAt(tf4.getText() ,row,3 );
+                table.setValueAt(tf5.getText() ,row,4 );
+                
+                Client.Update(tf1.getText(), tf2.getText(), tf3.getText(), tf4.getText(), tf5.getText());
 
                 
+                System.out.println("Update Successful ");
                 }
             }
         });
@@ -162,8 +158,17 @@ public class InventoryManagerGUI {
         // DELETE METHOD
         b3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String productID = tfs.getText();
+                String productID = tf1.getText();
                 Client.Delete(productID);
+                int row = table.getSelectedRow();
+                model.removeRow(row);
+                table.updateUI();
+                System.out.println("Delete Successful! ");
+                tf1.setText("");
+                tf2.setText("");
+                tf3.setText("");
+                tf4.setText("");
+                tf5.setText("");
             }
         });
         }
@@ -173,7 +178,15 @@ public class InventoryManagerGUI {
         }
 
 
-
+        b4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                tf1.setText("");
+                tf2.setText("");
+                tf3.setText("");
+                tf4.setText("");
+                tf5.setText("");
+            }
+        });
 
         // POPULATE TEXT FIELDS WITH SELECTED ROW
 
@@ -181,23 +194,27 @@ public class InventoryManagerGUI {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event)
             {
+                
                 tf1.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
                 tf2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
                 tf3.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
                 tf4.setText(table.getValueAt(table.getSelectedRow(), 3).toString());
                 tf5.setText(table.getValueAt(table.getSelectedRow(), 4).toString());
+                
             }
         });
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            System.out.println("Table Update Error ");
+            //e.printStackTrace();
         }
 
         f.add(bs);
         f.add(b1);
         f.add(b2);
         f.add(b3);
+        f.add(b4);
 
         f.add(tfs);
         f.add(tf1);
@@ -212,13 +229,6 @@ public class InventoryManagerGUI {
         f.add(l4);
         f.add(l5);
 
-       // f.add(list1);
-       // f.add(list2);
-       // f.add(list3);
-      //  f.add(list4);
-      //  f.add(list5);
-        //pane.setViewportView(table);
-        //f.add(pane);
         f.add(pane);
 
         f.setSize(1200, 600);

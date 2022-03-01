@@ -59,11 +59,11 @@ public static boolean connect(String user,String password){
         try{
             PreparedStatement updateStmt = conn.prepareStatement
             ("UPDATE product SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
-            updateStmt.setString(5, productID);
-            updateStmt.setString(1, quantity);
-            updateStmt.setString(2, wholesaleCost);
-            updateStmt.setString(3, salePrice);
-            updateStmt.setString(4, sellerID);
+            updateStmt.setString(1, productID);
+            updateStmt.setString(2, quantity);
+            updateStmt.setString(3, wholesaleCost);
+            updateStmt.setString(4, salePrice);
+            updateStmt.setString(5, sellerID);
             updateStmt.executeUpdate();
         }
         catch(Exception e){
@@ -97,10 +97,10 @@ public static boolean connect(String user,String password){
             ("DELETE FROM product WHERE product_id = ?");
             deleteStmt.setString(1, productID);
             deleteStmt.executeUpdate();
-
-            System.out.println("Client Delete Successful ");
+            
         }
         catch(Exception e){
+            System.out.println("Client Delete Error! ");
             e.printStackTrace();
         }
     }
@@ -151,9 +151,10 @@ public static boolean connect(String user,String password){
         String[] entry = new String[5];
         try{
             PreparedStatement selectStmt = conn.prepareStatement
-            ("SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id FROM product WHERE "+productID+" in (product_id)");
-            //selectStmt.setString(1, productID);
+            ("SELECT * FROM product WHERE product_id = "+ "'"+productID+"';");
+            
             ResultSet selectRS = selectStmt.executeQuery();
+            selectRS.next();
             entry[0] =selectRS.getString("product_id");
             entry[1] =selectRS.getString("quantity");
             entry[2] =selectRS.getString("wholesale_cost");

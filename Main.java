@@ -69,16 +69,16 @@ enter.addActionListener(new ActionListener(){
                 warningFrame.setLocation(500, 50);
                 warningFrame.add(success);
                 warningFrame.setVisible(true);
-                warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 
                 // SLEEP FOR 2 SECONDS TO ALLOW USER TO READ MESSAGE
                 try{
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(3);
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
+
                 warningFrame.dispose();
                 login.dispose();
 
