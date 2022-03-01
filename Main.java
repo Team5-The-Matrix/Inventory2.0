@@ -10,13 +10,14 @@ public static void main(String[] args){
     
 //LOGIN GUI    
 JFrame login = new JFrame("Login To Inventory Manager");
-JTextField user, pass;
+JTextField user;
+JPasswordField pass;
 JButton enter,clear;
 JLabel username, password;
 enter = new JButton("Enter");
 clear = new JButton("Clear");
 user = new JTextField();
-pass = new JTextField();
+pass = new JPasswordField();
 username = new JLabel();
 password = new JLabel();
 username.setText("Username:");
