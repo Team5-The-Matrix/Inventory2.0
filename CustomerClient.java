@@ -3,7 +3,7 @@ import java.sql.DriverManager;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Client{
+public class CustomerClient{
 
 static Connection conn = null;
 
@@ -16,6 +16,7 @@ return loginString;
 }
 
 //Connect to database
+
 public static boolean connect(String user,String password){
     boolean connected = false;
     //LoadDriver driver = new LoadDriver();
@@ -47,12 +48,6 @@ public static boolean connect(String user,String password){
         return connected;
     }
 }
-
-
-//TEST
-    public static void main(String[] args){
-    }
-
     
     //updates entry in database
     public static void Update(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){ //is this data passed in correct?
@@ -71,39 +66,6 @@ public static boolean connect(String user,String password){
         }
     }
 
-
-    //create new entry in database
-    public static void Create(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){
-        try{
-            PreparedStatement createStmt = conn.prepareStatement
-            ("INSERT INTO product VALUES(?,?,?,?,?)");
-            createStmt.setString(1, productID);
-            createStmt.setString(2, quantity);
-            createStmt.setString(3,wholesaleCost);
-            createStmt.setString(4,salePrice);
-            createStmt.setString(5,sellerID);
-            createStmt.executeUpdate();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    //deletes entry from database
-    public static void Delete(String productID){
-        try{
-            PreparedStatement deleteStmt = conn.prepareStatement
-            ("DELETE FROM product WHERE product_id = ?");
-            deleteStmt.setString(1, productID);
-            deleteStmt.executeUpdate();
-            
-        }
-        catch(Exception e){
-            System.out.println("Client Delete Error! ");
-            e.printStackTrace();
-        }
-    }
 
     //READS DATABASE INTO TABLEMODEL FOR GUI
     public static DefaultTableModel readDatabase(){
@@ -169,5 +131,13 @@ public static boolean connect(String user,String password){
         return entry;
         
     }
+
+    // NEED PURCHASE METHOD: TAKE ARRAYLIST(or other dynamic structure) OF ITEMS(CART), REMOVE THEM FROM DATABASE
+
+
+    // NEED CART METHOD: STORE SELECTED ITEMS FOR CUSTOMER UNTIL CHECKOUT
+
+
+
 
 }

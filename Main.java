@@ -50,7 +50,8 @@ JLabel success = new JLabel("Authenticated. Login Successful!",SwingConstants.CE
 enter.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent enter){
         String username = user.getText();
-        String password = pass.getText();
+        char[] pw = pass.getPassword();
+        String password = new String(pw);
 
         if ((username.equals("")|| username == null) || (password.equals("")|| password == null))
             {
