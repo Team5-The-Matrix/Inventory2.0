@@ -1,11 +1,15 @@
 import java.sql.*;
 import java.sql.DriverManager;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList
 
 
 public class CustomerClient{
 
 static Connection conn = null;
+static ArrayList<ArrayList<String>> userCart = new ArrayList();
+static ArrayList<String> productList = new ArrayList();
+static ArrayList<int> quantList = new ArrayList();
 
 
 //Constructs login string
@@ -134,10 +138,36 @@ public static boolean connect(String user,String password){
 
     // NEED PURCHASE METHOD: TAKE ARRAYLIST(or other dynamic structure) OF ITEMS(CART), REMOVE THEM FROM DATABASE
 
+   // Run this before doing any cart stuff and only once.
+    static void newCart(){
+        userCart.add(productList);
+        userCart.add(quantList);
+    }
 
-    // NEED CART METHOD: STORE SELECTED ITEMS FOR CUSTOMER UNTIL CHECKOUT
-
-
-
-
+   // Clears out the userCart
+    static void clearCart(){
+        productList.clear();
+        quantList.clear();
+    }
+    
+   // Adds a new product to userCart with quantity
+    static void addCart(String productID, int quantity){
+        productList.add(productID);
+        quantList.add(quantity);
+    }
+    
+   // Removes a product from userCart
+    static void removeCart(String productID){
+        int cartLocalIndex = productList.indexOf(productID);
+        productList.remove(cartLocalIndex);
+        quantList.remove(cartLocalIndex);
+    }
+    
+    // Changes the quantity of desired product in cart
+    static void changeCart(String productID, int quantity){
+        int cartLocalIndex = productList.indexOf(productID);
+        quantList.set(cartLocalIndex, quantity);
+    }
+        
+      
 }
