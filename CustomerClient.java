@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.sql.DriverManager;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList
+import java.util.ArrayList;
 
 
 public class CustomerClient{
@@ -9,7 +9,7 @@ public class CustomerClient{
 static Connection conn = null;
 static ArrayList<ArrayList<String>> userCart = new ArrayList();
 static ArrayList<String> productList = new ArrayList();
-static ArrayList<int> quantList = new ArrayList();
+static ArrayList<String> quantList = new ArrayList();
 
 
 //Constructs login string
@@ -136,7 +136,29 @@ public static boolean connect(String user,String password){
         
     }
 
-    // NEED PURCHASE METHOD: TAKE ARRAYLIST(or other dynamic structure) OF ITEMS(CART), REMOVE THEM FROM DATABASE
+
+    //updates database with purchases from cart; returns true if completed successfully,
+    //returns false if the quantity purchased exceeds quantity availible of any item in cart
+    public static boolean Purchase(){
+        String[] itemSearch = null;
+        String productID = null;
+        int currentQty;
+        int purchaseQty;
+        int updatedQty;
+        for(int i = 0; i < userCart.size(); i++){
+            itemSearch = Search(userCart.get(0).get(i)); //searches for each item in database
+            productID = itemSearch[0];
+            currentQty = Integer.parseInt(itemSearch[1]); //quantity in database
+            purchaseQty = Integer.parseInt(userCart.get(1).get(i)); //quantity to be purchased
+            updatedQty = currentQty - purchaseQty;
+            if (updatedQty >= 0)
+                Update(productID, Integer.toString(updatedQty), itemSearch[2], itemSearch[3], itemSearch[4]);
+            else
+                return false;
+        }
+        return true;
+    }
+
 
    // Run this before doing any cart stuff and only once.
     static void newCart(){
@@ -144,18 +166,21 @@ public static boolean connect(String user,String password){
         userCart.add(quantList);
     }
 
+
    // Clears out the userCart
     static void clearCart(){
         productList.clear();
         quantList.clear();
     }
     
+
    // Adds a new product to userCart with quantity
-    static void addCart(String productID, int quantity){
+    static void addCart(String productID, String quantity){
         productList.add(productID);
         quantList.add(quantity);
     }
     
+
    // Removes a product from userCart
     static void removeCart(String productID){
         int cartLocalIndex = productList.indexOf(productID);
@@ -163,8 +188,9 @@ public static boolean connect(String user,String password){
         quantList.remove(cartLocalIndex);
     }
     
+
     // Changes the quantity of desired product in cart
-    static void changeCart(String productID, int quantity){
+    static void changeCart(String productID, String quantity){
         int cartLocalIndex = productList.indexOf(productID);
         quantList.set(cartLocalIndex, quantity);
     }
