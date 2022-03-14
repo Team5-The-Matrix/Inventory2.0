@@ -85,7 +85,8 @@ enter.addActionListener(new ActionListener(){
                 login.dispose();
 
                 // CALL INVENTORY MANAGER
-                InventoryManagerGUI.main(args);
+                //InventoryManagerGUI.main(args);
+                HomePageGUI.main(args);
 
             }
         else
