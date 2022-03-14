@@ -21,7 +21,7 @@ public class HomePageGUI {
         try{
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                InventoryManagerGUI();
+                InventoryManagerGUI.main(args);
             }
         });
         }
