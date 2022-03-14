@@ -12,7 +12,7 @@ public class InventoryManagerGUI {
 
         JFrame f = new JFrame("Inventory Manager");
         DefaultTableModel model = Client.readDatabase();
-        JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10; // labels on top for table
+        JLabel l1, l2, l3, l4, l5; // labels on top for table
         JTextField tfs, tf1, tf2, tf3, tf4, tf5;
         JButton bs, b1, b2, b3, b4;
 
