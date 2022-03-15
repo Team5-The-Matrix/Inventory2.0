@@ -1,4 +1,8 @@
+package Admin;
 import javax.swing.*;
+
+import Customer.CustomerClient;
+
 import java.awt.event.*;
 import java.util.concurrent.TimeUnit;
 
@@ -61,7 +65,7 @@ enter.addActionListener(new ActionListener(){
                 warningFrame.setVisible(true);
                 warningFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
-
+            
 
         //call Login Method here
         System.out.println("Establishing Connection... ");
@@ -86,6 +90,7 @@ enter.addActionListener(new ActionListener(){
 
                 // CALL INVENTORY MANAGER
                 //InventoryManagerGUI.main(args);
+                CustomerClient.connect(username, password);
                 HomePageGUI.main(args);
 
             }

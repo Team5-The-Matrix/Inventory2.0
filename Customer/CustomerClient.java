@@ -1,3 +1,4 @@
+package Customer;
 import java.sql.*;
 import java.sql.DriverManager;
 import javax.swing.table.DefaultTableModel;
@@ -53,16 +54,15 @@ public static boolean connect(String user,String password){
     }
 }
     
-    //updates entry in database
-    public static void Update(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){ //is this data passed in correct?
+    //updates entry in database after CHECKOUT is called... only needs to update quantity.
+
+
+    public static void Update(String productID, String quantity){ //is this data passed in correct?
         try{
             PreparedStatement updateStmt = conn.prepareStatement
-            ("UPDATE product SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
-            updateStmt.setString(1, productID);
-            updateStmt.setString(2, quantity);
-            updateStmt.setString(3, wholesaleCost);
-            updateStmt.setString(4, salePrice);
-            updateStmt.setString(5, sellerID);
+            ("UPDATE product SET quantity = ? WHERE product_id = ?");
+            updateStmt.setString(2, productID);
+            updateStmt.setString(1, quantity);
             updateStmt.executeUpdate();
         }
         catch(Exception e){
@@ -76,12 +76,10 @@ public static boolean connect(String user,String password){
     
         DefaultTableModel table = new DefaultTableModel();
         table.addColumn("Product ID");
-        table.addColumn("Quantity");
-        table.addColumn("Wholesale Cost");
-        table.addColumn("Sale Price");
-        table.addColumn("Supplier ID");
+        table.addColumn("Quantity Available");
+        table.addColumn("Price");
         try{
-        String sql = "SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id "+
+        String sql = "SELECT product_id, quantity, sale_price "+
                      "FROM product "+
                      "LIMIT 50000";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -92,9 +90,7 @@ public static boolean connect(String user,String password){
                 table.addRow(new Object[]{
                     rs.getString("product_id"),
                     rs.getString("quantity"),
-                    rs.getString("wholesale_cost"),
                     rs.getString("sale_price"),
-                    rs.getString("supplier_id")
                 });  
                 rowcount++;   
             }
@@ -152,7 +148,7 @@ public static boolean connect(String user,String password){
             purchaseQty = Integer.parseInt(userCart.get(1).get(i)); //quantity to be purchased
             updatedQty = currentQty - purchaseQty;
             if (updatedQty >= 0)
-                Update(productID, Integer.toString(updatedQty), itemSearch[2], itemSearch[3], itemSearch[4]);
+                Update(productID, Integer.toString(updatedQty));
             else
                 return false;
         }

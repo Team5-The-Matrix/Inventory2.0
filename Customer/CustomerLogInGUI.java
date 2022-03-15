@@ -1,17 +1,18 @@
+package Customer;
 import javax.swing.*;
 import java.awt.event.*;
 
 
-public class HomePageGUI {
+public class CustomerLogInGUI {
 
     public static void main(String[] args) {
 
-        JFrame f = new JFrame("Home Page");
+        JFrame f = new JFrame("Customer Log In");
         JButton b1, b2;
 
 
-        b1 = new JButton("Inventory Manager");
-        b2 = new JButton("Customer Application");
+        b1 = new JButton("New Customer");
+        b2 = new JButton("Existing Customer");
         
 
         b1.setBounds(200, 100, 200, 100);
@@ -21,7 +22,7 @@ public class HomePageGUI {
         try{
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                InventoryManagerGUI.main(args);
+                //InventoryManagerGUI.main(args);
             }
         });
         }
@@ -33,7 +34,7 @@ public class HomePageGUI {
         try{
             b2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    CustomerApplicationGUI.main(args);
+                    //CustomerApplicationGUI.main(args);
                 }
             });
             }

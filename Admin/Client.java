@@ -1,3 +1,4 @@
+package Admin;
 import java.sql.*;
 import java.sql.DriverManager;
 import javax.swing.table.DefaultTableModel;
