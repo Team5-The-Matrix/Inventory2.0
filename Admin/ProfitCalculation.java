@@ -13,7 +13,7 @@ public class ProfitCalculation{
         double totalCost = 0;
         try{
             PreparedStatement profitStmt = conn.prepareStatement
-            ("SELECT quantity, wholesale_cost, sale_price FROM product");
+            ("SELECT quantity, wholesale_cost, sale_price FROM customer_orders");//change customer_orders if needed
             ResultSet profitRS = profitStmt.executeQuery();
             while(profitRS.next()){
                 qty = Double.parseDouble(profitRS.getString("quantity"));
