@@ -1,5 +1,6 @@
 package Admin;
 import javax.swing.*;
+import java.awt.Color;
 
 import Customer.CustomerApplicationGUI;
 
@@ -21,6 +22,8 @@ public class HomePageGUI {
         b1.setBounds(200, 100, 200, 100);
         b2.setBounds(200, 300, 200, 100);
 
+        b1.setBackground(Color.red);
+        b2.setBackground(Color.blue);
 
         try{
         b1.addActionListener(new ActionListener() {
