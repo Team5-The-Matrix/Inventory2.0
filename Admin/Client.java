@@ -1,3 +1,6 @@
+//Admin Client Program - connects to MySQL database, CRUD methods
+//Author(s): Noah Pearson Kramer, June Luke, Aria Comeau 
+
 package Admin;
 import java.sql.*;
 import java.sql.DriverManager;

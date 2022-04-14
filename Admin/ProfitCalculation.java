@@ -1,3 +1,6 @@
+//Analysis tool - Calculates company profits
+//Author(s): June Luke
+
 package Admin;
 import java.sql.*;
 import java.util.ArrayList;
