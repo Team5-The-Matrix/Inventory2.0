@@ -1,3 +1,5 @@
+//GUI for customer application
+//Author(s): Noah Pearson Kramer, Matthew Mazzaccaro 
 package Customer;
 import java.awt.Color;
 import java.awt.Dimension;

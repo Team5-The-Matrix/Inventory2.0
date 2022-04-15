@@ -1,3 +1,6 @@
+//GUI for inventory manager application
+//Author(s): Matthew Mazzaccaro, Noah Pearson Kramer
+
 package Admin;
 import java.awt.Color;
 import java.awt.Dimension;

@@ -1,3 +1,6 @@
+//GUI for naviagating between applications
+// Author(s): Matthew Mazzaccaro
+
 package Admin;
 import javax.swing.*;
 import java.awt.Color;

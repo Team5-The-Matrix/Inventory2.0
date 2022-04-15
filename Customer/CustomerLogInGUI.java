@@ -1,3 +1,6 @@
+//Login GUI for customer application
+//Author(s): Milagros Hernandez-Vasquez, ?
+
 package Customer;
 import javax.swing.*;
 import java.awt.event.*;

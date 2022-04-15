@@ -1,3 +1,7 @@
+//Backend for Customer Application
+// Author(s): Noah Pearson Kramer, June Luke, Aria Comeau
+
+
 package Customer;
 import java.sql.*;
 import java.sql.DriverManager;
