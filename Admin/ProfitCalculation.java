@@ -4,10 +4,10 @@
 package Admin;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ProfitCalculation{
     static Connection conn = null;
@@ -65,9 +65,9 @@ public class ProfitCalculation{
         double qty, wholesaleCost, salePrice;
         double totalGain = 0;
         double totalCost = 0;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date d1 = dateFormat.parse(date1);
-        Date d2 = dateFormat.parse(date2);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate d1 = LocalDate.parse(date1, dateFormat);
+        LocalDate d2 = LocalDate.parse(date2, dateFormat);
         ArrayList<String> productIDs = new ArrayList<>();
         Iterator<String> itr = productIDs.iterator();
         try{
@@ -75,7 +75,41 @@ public class ProfitCalculation{
             ("SELECT product_id, date FROM customer_orders");//change customer_orders if needed
             ResultSet profitRS = profitStmt.executeQuery();
             while(profitRS.next()){
-                if(d1.before(d2)){
+                if(d1.isBefore(d2)){
+                    productIDs.add(profitRS.getString("product_id"));
+                }
+            }
+            while(itr.hasNext()){
+                String[] str = Search(itr.next());
+                qty = Double.parseDouble(str[1]);
+                wholesaleCost = Double.parseDouble(str[2]);
+                salePrice = Double.parseDouble(str[3]);
+                totalGain = totalGain + (qty * salePrice);
+                totalCost = totalCost + (qty * wholesaleCost);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return totalGain - totalCost;
+    }
+
+
+    //
+    public static double ProfitLastWeek(){
+        double qty, wholesaleCost, salePrice;
+        double totalGain = 0;
+        double totalCost = 0;
+        LocalDate d1 = LocalDate.now();
+        LocalDate d2 = d1.minusDays(7);
+        ArrayList<String> productIDs = new ArrayList<>();
+        Iterator<String> itr = productIDs.iterator();
+        try{
+            PreparedStatement profitStmt = conn.prepareStatement
+            ("SELECT product_id, date FROM customer_orders");//change customer_orders if needed
+            ResultSet profitRS = profitStmt.executeQuery();
+            while(profitRS.next()){
+                if(d1.isAfter(d2)){
                     productIDs.add(profitRS.getString("product_id"));
                 }
             }
