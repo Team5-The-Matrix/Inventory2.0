@@ -62,7 +62,7 @@ public static boolean connect(String user,String password){
     public static void Update(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){ //is this data passed in correct?
         try{
             PreparedStatement updateStmt = conn.prepareStatement
-            ("UPDATE product SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
+            ("UPDATE items SET quantity = ?, wholesale_cost = ?, sale_price = ?, supplier_id = ? WHERE product_id = ?");
             updateStmt.setString(1, productID);
             updateStmt.setString(2, quantity);
             updateStmt.setString(3, wholesaleCost);
@@ -80,7 +80,7 @@ public static boolean connect(String user,String password){
     public static void Create(String productID, String quantity, String wholesaleCost, String salePrice, String sellerID){
         try{
             PreparedStatement createStmt = conn.prepareStatement
-            ("INSERT INTO product VALUES(?,?,?,?,?)");
+            ("INSERT INTO items VALUES(?,?,?,?,?)");
             createStmt.setString(1, productID);
             createStmt.setString(2, quantity);
             createStmt.setString(3,wholesaleCost);
@@ -98,7 +98,7 @@ public static boolean connect(String user,String password){
     public static void Delete(String productID){
         try{
             PreparedStatement deleteStmt = conn.prepareStatement
-            ("DELETE FROM product WHERE product_id = ?");
+            ("DELETE FROM items WHERE product_id = ?");
             deleteStmt.setString(1, productID);
             deleteStmt.executeUpdate();
             
@@ -120,7 +120,7 @@ public static boolean connect(String user,String password){
         table.addColumn("Supplier ID");
         try{
         String sql = "SELECT product_id, quantity, wholesale_cost, sale_price, supplier_id "+
-                     "FROM product "+
+                     "FROM items "+
                      "LIMIT 50000";
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -155,7 +155,7 @@ public static boolean connect(String user,String password){
         String[] entry = new String[5];
         try{
             PreparedStatement selectStmt = conn.prepareStatement
-            ("SELECT * FROM product WHERE product_id = "+ "'"+productID+"';");
+            ("SELECT * FROM items WHERE product_id = "+ "'"+productID+"';");
             
             ResultSet selectRS = selectStmt.executeQuery();
             selectRS.next();
