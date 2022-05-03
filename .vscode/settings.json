@@ -5,7 +5,10 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/Users/noahpearsonkramer/Desktop/mysql-connector-java-8.0.28/**/*.jar",
-        "c:\\Program Files\\MySQL\\Connector J 8.0\\mysql-connector-java-8.0.28.jar"
+        "c:\\Program Files\\MySQL\\Connector J 8.0\\mysql-connector-java-8.0.28.jar",
+        "/Users/noahpearsonkramer/Downloads/jfreechart-1.5.2/**/*.jar",
+        "/Users/noahpearsonkramer/Desktop/jfreechart-1.5.2/**/*.jar",
+        "/Users/noahpearsonkramer/Downloads/xchart-3.8.1/**/*.jar"
     ],
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m",
     "java.dependency.packagePresentation": "hierarchical"

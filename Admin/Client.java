@@ -27,7 +27,7 @@ public static boolean connect(String user,String password){
 
     try{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        url = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory";
+        url = "jdbc:mysql://SG-InvnetoryManager-5975-mysql-master.servers.mongodirector.com:3306/Inventory";
         name = user;
         pass = password;
         //String fullLoginString = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory"+ loginString;
