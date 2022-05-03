@@ -147,6 +147,7 @@ public class CustomerApplicationGUI {
                     }
                     else
                         System.out.println("Purchase Error ");
+                    tf6.setText("0.00");
                 }
             });
             }

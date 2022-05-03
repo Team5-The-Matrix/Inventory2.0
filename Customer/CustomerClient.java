@@ -33,7 +33,7 @@ public static boolean connect(String user,String password){
 
     try{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        url = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory";
+        url = "jdbc:mysql://SG-InvnetoryManager-5975-mysql-master.servers.mongodirector.com:3306/Inventory";
         name = user;
         pass = password;
         //String fullLoginString = "jdbc:mysql://SG-InventoryManagement-5756-mysql-master.servers.mongodirector.com:3306/Inventory"+ loginString;
@@ -64,7 +64,7 @@ public static boolean connect(String user,String password){
     public static void Update(String productID, String quantity){ //is this data passed in correct?
         try{
             PreparedStatement updateStmt = conn.prepareStatement
-            ("UPDATE product SET quantity = ? WHERE product_id = ?");
+            ("UPDATE items SET quantity = ? WHERE product_id = ?");
             updateStmt.setString(2, productID);
             updateStmt.setString(1, quantity);
             updateStmt.executeUpdate();
@@ -84,7 +84,7 @@ public static boolean connect(String user,String password){
         table.addColumn("Price");
         try{
         String sql = "SELECT product_id, quantity, sale_price "+
-                     "FROM product "+
+                     "FROM items "+
                      "LIMIT 50000";
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -117,7 +117,7 @@ public static boolean connect(String user,String password){
         String[] entry = new String[5];
         try{
             PreparedStatement selectStmt = conn.prepareStatement
-            ("SELECT * FROM product WHERE product_id = "+ "'"+productID+"';");
+            ("SELECT * FROM items WHERE product_id = "+ "'"+productID+"';");
             
             ResultSet selectRS = selectStmt.executeQuery();
             selectRS.next();
