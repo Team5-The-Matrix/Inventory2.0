@@ -5,7 +5,13 @@
 
 package Admin;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
+
+import javax.swing.table.DefaultTableModel;
 
 public class ReportTools {
 
@@ -13,12 +19,42 @@ public class ReportTools {
 
 
 
-    // TAKES CSV OF SAMPLE ORDERS AND RUNS THEM ON DATABASE 
-    public void SimulateOrders(){
+    
+    public static ReturnObject SimulateOrdersLocally(String path){
+        Boolean success = false;
+        ReturnObject obj = new ReturnObject();
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            DefaultTableModel SimulatedOrders = new DefaultTableModel();
+            SimulatedOrders.addColumn("Date");
+            SimulatedOrders.addColumn("Customer Email");
+            SimulatedOrders.addColumn("Customer Location");
+            SimulatedOrders.addColumn("Product ID");
+            SimulatedOrders.addColumn("Product Quantity");
+            String line;
+            while((line = br.readLine())!= null){
+                String[] lines = line.split(",");
+                SimulatedOrders.addRow(lines);
+            }
+            obj.success = true;
+            obj.table = SimulatedOrders;
+        }
+        catch(Exception e){
+            obj.success = false;
+            e.printStackTrace();
+            return obj;
+        }
+        return obj;
 
-        Scanner sc = new Scanner(System.in);
-        //TODO : READ CSV, RUN SIMULATED ORDERS ON DATABASE, CREATE NEW TABLE TO HOLD ORDER HISTORY
+        
+        //TODO : READ CSV, RUN SIMULATED ORDERS LOCALLY, CREATE NEW TABLE TO HOLD ORDER HISTORY
 
+
+    }
+
+    public static Boolean SimulateOrdersInDatabase(File csv){
+        Boolean success = false;
+        return success;
     }
 
     // Pulls data from database and order history for charting
@@ -40,5 +76,10 @@ public class ReportTools {
 
     }
     
+
+}
+class ReturnObject{
+boolean success = false;
+DefaultTableModel table;
 
 }
